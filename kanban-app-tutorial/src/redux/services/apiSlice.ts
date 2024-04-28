@@ -55,4 +55,4 @@ export const fireStoreApi = createApi({
 });
 
 // Export hooks for using the created endpoint
-export const { useFetchDataFromDbQuery } = fireStoreApi;
+export const { useFetchDataFromDbQuery, useUpdateBoardToDbMutation } = fireStoreApi;

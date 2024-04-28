@@ -3,7 +3,7 @@
 import Dropdown from "./Dropdown";
 import { useState, useEffect } from 'react'
 // Import Redux functions and selectors for managing board names (setCurrentBoardName, getCurrentBoardName)
-import { setPageTitle, getPageTitle } from '../../redux/features/appSlice'
+import { setCurrentBoardName, getCurrentBoardName } from '../../redux/features/appSlice'
 import { useAppDispatch, useAppSelector } from '@/components/redux/hooks'
 // Import the data-fetching hook from the API slice
 import { useFetchDataFromDbQuery } from "@/components/redux/services/apiSlice";
@@ -20,12 +20,12 @@ export default function Navbar() {
     if (data) {
       // When a user signs in, set the currentBoardName to the first board's name
       const activeBoard = data[0].boards[0];
-      dispatch(setPageTitle(activeBoard.name));
+      dispatch(setCurrentBoardName(activeBoard.name));
     }
   }, [data, dispatch]);
 
   // Select the current board name from the Redux store
-  const currentBoardName = useAppSelector(getPageTitle);
+  const currentBoardName = useAppSelector(getCurrentBoardName);
 
   return (
     <nav className="bg-white border flex h-24">
