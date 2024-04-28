@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useFetchDataFromDbQuery } from "@/components/redux/services/apiSlice";
 import { useAppSelector, useAppDispatch } from "@/components/redux/hooks";
-import { getCurrentBoardName, openAddAndEditBoardModal } from "@/components/redux/features/appSlice";
+import { getCurrentBoardName, openAddAndEditBoardModal, openAddAndEditTaskModal } from "@/components/redux/features/appSlice";
 import { MdEdit, MdDelete } from "react-icons/md";
 
 // Define types for the tasks data
@@ -58,9 +58,8 @@ export default function BoardTasks() {
                 const { id, name, tasks } = column;
                 return (
                   <div key={id} className="w-[17.5rem] shrink-0">
-                    <p className="text-black">{`${name} (${
-                      tasks ? tasks?.length : 0
-                    })`}</p>
+                    <p className="text-black">{`${name} (${tasks ? tasks?.length : 0
+                      })`}</p>
 
                     {tasks &&
                       // Display the tasks if there are tasks in the column, if not, display an empty column
@@ -75,7 +74,16 @@ export default function BoardTasks() {
                             >
                               <p>{title}</p>
                               <div className="flex items-center space-x-1">
-                                <MdEdit className="text-lg cursor-pointer" />
+                                <MdEdit
+                                  onClick={() =>
+                                    dispatch(
+                                      openAddAndEditTaskModal({
+                                        variant: "Edit Task", title, index, name
+                                      }),
+                                    )
+                                  }
+                                  className="text-lg cursor-pointer"
+                                />;
                                 <MdDelete className="text-lg cursor-pointer text-red-500" />
                               </div>
                             </div>
@@ -89,7 +97,7 @@ export default function BoardTasks() {
               })}
               {/* If the number of columns of tasks is less than 7, display an option to add more columns */}
               {columns.length < 7 ? (
-                <div 
+                <div
                   className="rounded-md bg-white w-[17.5rem] mt-12 shrink-0 flex justify-center items-center"
                   onClick={() => dispatch(openAddAndEditBoardModal("Edit Board")}
                 >
